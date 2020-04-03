@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class CourseList extends Component {
   render() {
     return (
-      <div>
-        Courses
-      </div>
+      <li>
+        {this.props.details.name}
+      </li>
     );
   }
 }
