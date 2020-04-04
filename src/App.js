@@ -55,13 +55,26 @@ class App extends Component {
       courses
     })
   }
+
+
+  // Update Course Name After Edit The Course
+  updateCourse = (index,newValue) =>{
+    let courses = this.state.courses;
+    let course = courses[index];
+    course['name'] = newValue;
+    this.setState({
+      courses
+    })
+  }
+
+
   render(){
     // Get All Courses For Listing It
     const courses = this.state.courses;
 
     // Loop Through Courses For Pass It To 'CourseList' Component
     const listCourses = courses.map((item , index)=>{
-      return <CourseList key={index} details={item} deleteCourse={this.deleteCourse} indexOfDeleted={index}/>
+      return <CourseList key={index} details={item} deleteCourse={this.deleteCourse} indexOfDeleted={index} courseName={item.name} updateCourse={this.updateCourse}/>
     })
 
     return (
