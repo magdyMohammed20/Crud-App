@@ -79,7 +79,7 @@ class App extends Component {
 
     return (
       <div className='w-50 mx-auto'>
-        <h1>Courses Section</h1>
+        <h1 class='text-white my-3'>Courses Section</h1>
         <CourseForm handleChange={this.handleChange} addCourse={this.addCourse} current={this.state.current}/>
         <ul className='list-unstyled mt-4'>
         {this.state.courses.length > 0 ? listCourses : <div className='bg-danger text-white p-3 rounded'>There Is No Items To Show</div>}
