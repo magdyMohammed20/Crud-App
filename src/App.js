@@ -29,8 +29,13 @@ class App extends Component {
     let lastCourseId = courses[courses.length-1];
     
     if(newCourse !== ''){
-      // Add 1 For The New Course Id For Be Unique
-      courses.push({id:lastCourseId.id + 1,name: newCourse})
+      if(this.state.courses.length !== 0){
+        // Add 1 For The New Course Id For Be Unique If Courses Has At Least 1 Element
+        courses.push({id:lastCourseId.id + 1,name: newCourse})
+      }else{
+        // Add 1 For The New Course Id For Be Unique If Courses Not Has Any Elements
+        courses.push({id:1,name: newCourse})
+      }
       // Set The New Course And Clear The Input
       this.setState({
         courses,
@@ -40,21 +45,31 @@ class App extends Component {
       alert('Please Enter Course Name')
     }
   }
+
+  // Delete Course
+  deleteCourse = index =>{
+    const courses = this.state.courses;
+    const findIndex = courses.findIndex((item,itemIndex)=> index==itemIndex)
+    courses.splice(findIndex , 1)
+    this.setState({
+      courses
+    })
+  }
   render(){
     // Get All Courses For Listing It
     const courses = this.state.courses;
 
     // Loop Through Courses For Pass It To 'CourseList' Component
     const listCourses = courses.map((item , index)=>{
-      return <CourseList key={index} details={item}/>
+      return <CourseList key={index} details={item} deleteCourse={this.deleteCourse} indexOfDeleted={index}/>
     })
 
     return (
-      <div>
+      <div className='w-50 mx-auto'>
         <h1>Courses Section</h1>
         <CourseForm handleChange={this.handleChange} addCourse={this.addCourse} current={this.state.current}/>
-        <ul>
-        {listCourses}
+        <ul className='list-unstyled mt-4'>
+        {this.state.courses.length > 0 ? listCourses : <div className='bg-danger text-white p-3 rounded'>There Is No Items To Show</div>}
         </ul>
       </div>
     );
